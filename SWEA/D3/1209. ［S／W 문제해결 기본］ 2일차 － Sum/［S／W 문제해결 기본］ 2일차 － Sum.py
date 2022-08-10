@@ -2,6 +2,7 @@
 # 2022-08-10
 
 
+
 # 최대값 구하는 함수를 만든다.
 def maxV(arr):
     maxV = 0
@@ -36,14 +37,15 @@ for _ in range(1, 11):
             total += arr[j][i]
         ans.append(total)
     
-    # 각 대각선의 합
+    # 대각선의 합 (좌측상단에서 우측하단)
     total = 0
     for i in range(10):
         total += arr[i][i]
     ans.append(total)
 
+    # 대각선의 합 (우측상단에서 좌측하단)
     total = 0
-    for i in range(10):
+    for i in range(1,11):
         total += arr[-i][-i]
     ans.append(total)
 
