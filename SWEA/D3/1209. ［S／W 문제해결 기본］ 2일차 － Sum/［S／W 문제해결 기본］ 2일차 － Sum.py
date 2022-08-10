@@ -45,9 +45,8 @@ for _ in range(1, 11):
 
     # 대각선의 합 (우측상단에서 좌측하단)
     total = 0
-    for i in range(1,11):
-        total += arr[-i][-i]
-    ans.append(total)
+    for i in range(10):
+        total += arr[i][(10-1)-i]
 
     # 정답을 출력한다.
     print('#{} {}'.format(tc, maxV(ans)))
