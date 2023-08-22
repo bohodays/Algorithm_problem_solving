@@ -1,24 +1,9 @@
-// 1439 뒤집기
-
 const fs = require("fs");
-const strs = fs.readFileSync("/dev/stdin").toString().trim();
+const input = fs.readFileSync("/dev/stdin").toString().trim();
 
-const checkStrs = (strs, target) => {
-  let stack = [];
-  let ans = 0;
-  for (let i = 0; i < strs.length; i++) {
-    if (strs[i] !== target) stack.push(strs[i]);
-    else {
-      if (stack.length) {
-        stack = [];
-        ans++;
-      }
-    }
-  }
+const a = input.split("0");
+const b = input.split("1");
+const ansA = a.filter((item) => item !== "");
+const ansB = b.filter((item) => item !== "");
 
-  if (stack.length) ans++;
-
-  return ans;
-};
-
-console.log(Math.min(checkStrs(strs, "0"), checkStrs(strs, "1")));
+console.log(Math.min(ansA.length, ansB.length));
