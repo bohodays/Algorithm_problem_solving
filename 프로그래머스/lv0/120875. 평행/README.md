@@ -1,10 +1,10 @@
 # [level 0] 평행 - 120875 
 
-[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/120875) 
+[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/120875?language=python3) 
 
 ### 성능 요약
 
-메모리: 33.5 MB, 시간: 0.06 ms
+메모리: 10.2 MB, 시간: 0.00 ms
 
 ### 구분
 
@@ -12,7 +12,7 @@
 
 ### 채점결과
 
-<br/>정확성: 100.0<br/>합계: 100.0 / 100.0
+Empty
 
 ### 문제 설명
 
@@ -29,10 +29,12 @@
 <h5>제한사항</h5>
 
 <ul>
-<li>0 ≤&nbsp;<code>dots</code>의 원소 ≤ 100</li>
 <li><code>dots</code>의 길이 = 4</li>
-<li><code>dots</code>의 원소의 길이 = 2</li>
-<li>dots의 원소는 [x, y] 형태이며 x, y는 정수입니다.</li>
+<li><code>dots</code>의 원소는 [x, y] 형태이며 x, y는 정수입니다.
+
+<ul>
+<li>0 ≤&nbsp;x, y ≤ 100</li>
+</ul></li>
 <li>서로 다른 두개 이상의 점이 겹치는 경우는 없습니다.</li>
 <li>두 직선이 겹치는 경우(일치하는 경우)에도 1을 return 해주세요.</li>
 <li>임의의 두 점을 이은 직선이 x축 또는 y축과 평행한 경우는 주어지지 않습니다.</li>
@@ -75,8 +77,9 @@
 
 <hr>
 
-<p>※ 공지 - 2022년 9월 30일 제한 사항 및 테스트케이스가 수정되었습니다.<br>
-※ 공지 - 2022년 10월 27일 제한 사항 및 테스트케이스가 수정되었습니다.</p>
+<p>※ 공지 - 2022년 9월 30일 제한 사항 및 테스트 케이스가 수정되었습니다.<br>
+※ 공지 - 2022년 10월 27일 제한 사항 및 테스트 케이스가 수정되었습니다.<br>
+※ 공지 - 2023년 2월 14일 테스트 케이스가 수정되었습니다.</p>
 
 
 > 출처: 프로그래머스 코딩 테스트 연습, https://programmers.co.kr/learn/challenges
