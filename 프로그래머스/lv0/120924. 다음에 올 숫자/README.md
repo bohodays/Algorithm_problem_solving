@@ -1,10 +1,10 @@
 # [level 0] 다음에 올 숫자 - 120924 
 
-[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/120924) 
+[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/120924?language=python3) 
 
 ### 성능 요약
 
-메모리: 33.4 MB, 시간: 0.03 ms
+메모리: 10.2 MB, 시간: 0.00 ms
 
 ### 구분
 
@@ -12,7 +12,7 @@
 
 ### 채점결과
 
-<br/>정확성: 100.0<br/>합계: 100.0 / 100.0
+Empty
 
 ### 문제 설명
 
@@ -24,9 +24,13 @@
 
 <ul>
 <li>2 &lt; <code>common</code>의 길이 &lt; 1,000</li>
-<li>-1,000 &lt; <code>common</code>의 원소 &lt; 2,000</li>
+<li>-1,000 &lt; <code>common</code>의 원소 &lt; 2,000
+
+<ul>
+<li><code>common</code>의 원소는 모두 정수입니다.</li>
+</ul></li>
 <li>등차수열 혹은 등비수열이 아닌 경우는 없습니다.</li>
-<li>공비가 0인 경우는 없습니다.</li>
+<li>등비수열인 경우 공비는 0이 아닌 정수입니다.</li>
 </ul>
 
 <hr>
