@@ -1,10 +1,10 @@
 # [unrated] 푸드 파이트 대회 - 134240 
 
-[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/134240) 
+[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/134240?language=python3) 
 
 ### 성능 요약
 
-메모리: 33.5 MB, 시간: 0.05 ms
+메모리: 10.2 MB, 시간: 0.01 ms
 
 ### 구분
 
@@ -66,7 +66,7 @@ Empty
 <li>문제 예시와 같습니다.</li>
 </ul>
 
-<p><strong>입출력 예 #1</strong></p>
+<p><strong>입출력 예 #2</strong></p>
 
 <ul>
 <li>두 선수는 1번 음식 3개, 3번 음식 1개를 먹게 되므로 음식의 배치는 "111303111"입니다.</li>
