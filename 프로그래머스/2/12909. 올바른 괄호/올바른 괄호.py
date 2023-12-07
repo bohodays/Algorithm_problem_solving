@@ -1,17 +1,17 @@
 def solution(s):
-    answer = []
+    answer = True
+    s = list(s)
     
-    for i in range(len(s)):
-        item = s[i]
-        if not answer:
-            answer.append(item)
+    result = []
+    
+    for item in s:
+        # 배열이 비어있으면 삽입
+        if not result:
+            result.append(item)
         else:
-            if item == ")":
-                if answer[-1] == "(":
-                    answer.pop()
-                else:
-                    answer.append(item)
+            if item == ")" and result[-1] == "(":
+                result.pop()
             else:
-                answer.append(item)        
-    
-    return True if not answer else False
+                result.append(item)
+                
+    return False if result else True
