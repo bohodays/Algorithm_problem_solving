@@ -1,28 +1,17 @@
-def is_priority(num, array):
-    for i in range(len(array)):
-        if array[i] > num:
-            return False
-    return True
-
 def solution(priorities, location):
-    answer = 0
+    priorities = [[x, False] for x in priorities]
+    priorities[location][1] = True
+    count = 1
     
-    array_for_answer = [[priorities[i], i] for i in range(len(priorities))]
-    
-    while priorities:
+    while True:
         target = priorities[0]
-        result = is_priority(target, priorities[1:])
-
-        if result:
-            answer += 1
-            if array_for_answer[0][1] == location:
-                return answer
-            else:
-                priorities.pop(0)
-                array_for_answer.pop(0)
-                
+        check_items = [item for item in priorities[1:] if target[0] < item[0]]
+        if check_items:
+            item = priorities.pop(0)
+            priorities.append(item)
         else:
-            priorities.append(priorities.pop(0))
-            array_for_answer.append(array_for_answer.pop(0))
-            
-    return answer
+            if target[1]:
+                return count
+            else:
+                item = priorities.pop(0)
+                count += 1
