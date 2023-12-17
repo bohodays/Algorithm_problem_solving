@@ -1,18 +1,16 @@
 def solution(numbers, target):
     answer = 0
-    limit = len(numbers)
     
-    def dfs(count, number):
+    def dfs(result, count, limit):
         nonlocal answer
-        # 종료조건
         if count == limit:
-            if number == target:
+            if result == target:
                 answer += 1
             return
-    
-        dfs(count + 1, number + numbers[count])
-        dfs(count + 1, number - numbers[count])
         
-    dfs(0, 0)
+        dfs(result + numbers[count], count + 1, limit)
+        dfs(result - numbers[count], count + 1, limit)
+    
+    dfs(0, 0, len(numbers))
     
     return answer
