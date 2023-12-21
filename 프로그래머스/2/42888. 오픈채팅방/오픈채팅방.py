@@ -10,8 +10,6 @@ def solution(record):
         else:
             user_act, user_id = item
         
-        
-        
         if user_act == "Enter":
             message = "님이 들어왔습니다."
             id_matching_nickname[user_id] = user_nickname
@@ -21,7 +19,6 @@ def solution(record):
             message = "님이 들어왔습니다."
             id_matching_nickname[user_id] = user_nickname 
             
-        
         if user_act != "Change":
             messages.append([user_id, message])  
     
