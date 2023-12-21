@@ -1,7 +1,7 @@
 import math
 
 def solution(x, y, n):
-    d = [math.inf] * (y + 1)
+    d = [1000001] * (y + 1)
     d[x] = 0
     x_mul_2 = x * 2
     x_mul_3 = x * 3
@@ -16,4 +16,4 @@ def solution(x, y, n):
         if (i >= x_mul_3) and (i % 3 == 0):
             d[i] = min(d[i], d[i // 3] + 1)
             
-    return d[y] if d[y] != math.inf else -1
+    return d[y] if d[y] != 1000001 else -1
