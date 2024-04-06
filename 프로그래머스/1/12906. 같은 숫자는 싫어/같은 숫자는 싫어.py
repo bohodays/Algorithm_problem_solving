@@ -1,12 +1,8 @@
-from collections import deque
-
 def solution(arr):
-    queue = deque(arr)
-    answer = [queue.popleft()]
+    answer = [arr[0]]
+
+    for i in range(1, len(arr)):
+        if (answer[-1] != arr[i]):
+            answer.append(arr[i])
     
-    while queue:
-        item = queue.popleft()
-        if answer[-1] != item:
-            answer.append(item)
-            
     return answer
