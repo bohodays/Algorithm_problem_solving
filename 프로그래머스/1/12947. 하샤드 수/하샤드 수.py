@@ -1,8 +1,11 @@
+def trans_f(number):
+    sum_value = 0
+    while number:
+        sum_value += number % 10
+        number //= 10
+    return sum_value
+
 def solution(x):
-    answer = True
-    sumValue = 0
-    
-    for i in str(x):
-        sumValue += int(i)
-    
-    return True if x % sumValue == 0 else False
+    if x % trans_f(x) == 0:
+        return True
+    return False
