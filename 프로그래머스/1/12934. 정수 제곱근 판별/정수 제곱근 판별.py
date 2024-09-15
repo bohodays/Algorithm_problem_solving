@@ -1,7 +1,6 @@
 def solution(n):
-
-    for i in range(1, n + 1):
-        if (i**2 == n):
+    check_value = n**(1/2)
+    for i in range(1, int(check_value) + 1):
+        if check_value == i:
             return (i + 1)**2
-        
     return -1
