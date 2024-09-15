@@ -1,9 +1,9 @@
 def solution(a, b):
     answer = 0
-    minValue = min(a, b)
-    maxValue = max(a, b)
+    max_value = max(a, b)
+    min_value = min(a, b)
     
-    for i in range(minValue, maxValue + 1):
+    for i in range(min_value, max_value + 1):
         answer += i
-    
+        
     return answer
