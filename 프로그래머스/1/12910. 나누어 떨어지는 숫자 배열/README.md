@@ -1,10 +1,10 @@
 # [level 1] 나누어 떨어지는 숫자 배열 - 12910 
 
-[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/12910) 
+[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/12910?language=javascript) 
 
 ### 성능 요약
 
-메모리: 13.3 MB, 시간: 15.93 ms
+메모리: 37.1 MB, 시간: 1.79 ms
 
 ### 구분
 
@@ -16,7 +16,7 @@
 
 ### 제출 일자
 
-2024년 09월 15일 12:00:27
+2024년 10월 22일 00:21:55
 
 ### 문제 설명
 
