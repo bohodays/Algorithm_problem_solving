@@ -1,15 +1,15 @@
 function solution(s) {
     const answer = [];
-    const stack = [];
+    const ref = {};
     
-    for (const item of s) {
-        const targetIndex = stack.indexOf(item);
-        if (targetIndex === -1) answer.push(-1);
-        else {
-            answer.push(targetIndex + 1)
+    [...s].forEach((item, index) => {
+        if (!(item in ref)) {
+            ref[item] = index;
+            answer.push(-1);
+        } else {
+            answer.push(index - ref[item]);
+            ref[item] = index;
         }
-        
-        stack.push(item);
-    }
+    })
     return answer;
 }
