@@ -1,10 +1,10 @@
 # [level 2] 영어 끝말잇기 - 12981 
 
-[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/12981) 
+[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/12981?language=javascript) 
 
 ### 성능 요약
 
-메모리: 10.2 MB, 시간: 0.09 ms
+메모리: 33.7 MB, 시간: 3.57 ms
 
 ### 구분
 
@@ -16,7 +16,7 @@
 
 ### 제출 일자
 
-2023년 12월 0일 12:2:2
+2024년 12월 10일 22:44:40
 
 ### 문제 설명
 
