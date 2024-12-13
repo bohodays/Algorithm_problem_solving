@@ -1,21 +1,22 @@
 function solution(k, tangerine) {
-    let answer = 0;
-    const itemObj = {};
+    var answer = 0;
     
-    for (const item of tangerine) {
-        itemObj[item] = itemObj[item] ? itemObj[item] + 1 : 1;
-    }
+    const countObj = {};
+    tangerine.forEach((item) => {
+        if (item in countObj) {
+            countObj[item] += 1;
+        } else {
+            countObj[item] = 1;
+        }
+    })
     
-    const setTangerine = [...new Set(tangerine)]
-    
-    const sortedArray = setTangerine.sort((a, b) => itemObj[b] - itemObj[a])
-    
-    // console.log(sortedArray, itemObj)
-    for (const item of sortedArray) {
+    const countArray = Object.entries(countObj).sort((a, b) => b[1] - a[1]);
+    for (const item of countArray) {
+        k -= item[1];
         answer++;
-        k -= itemObj[item]
-        
-        if (k <= 0) return answer
+        if (k <= 0) {
+            break;
+        }
     }
     
     return answer;
