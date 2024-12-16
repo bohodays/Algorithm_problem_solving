@@ -1,38 +1,34 @@
-// 올바른 문장인지 확인하는 함수
-const checkArray = (arr) => {
-    const stack = []
-    for (const item of arr) {
-        if (!stack.length) stack.push(item);
-        else {
-            if (item === ")") {
-                if (stack[stack.length - 1] === "(") {
-                    stack.pop()                    
-                }
-            } else if (item === "]") {
-                if (stack[stack.length - 1] === "[") {
-                    stack.pop()
-                }
-            } else if (item === "}") {
-                if (stack[stack.length - 1] === "{") {
-                    stack.pop()
-                }
+function checkCorrect(array) {
+    const stack = [];
+    for (let i = 0; i < array.length; i++) {
+        const targetItem = array[i];
+        if (!stack.length) {
+            stack.push(targetItem);
+        } else {
+            if (stack[stack.length - 1] === "(" && targetItem === ")") {
+                stack.pop();
+            } else if (stack[stack.length - 1] === "[" && targetItem === "]") {
+                stack.pop();
+            } else if (stack[stack.length - 1] === "{" && targetItem === "}") {
+                stack.pop();
             } else {
-                stack.push(item)
+                stack.push(targetItem);
             }
         }
     }
-    if (stack.length) return false;
-    return true
+    return stack.length ? false : true;
 }
 
 function solution(s) {
     let answer = 0;
-    const sArray = s.split("")
+    s = s.split("");
     
     for (let i = 0; i < s.length; i++) {
-        const result = checkArray(sArray)
-        if (result) answer++;
-        sArray.push(sArray.shift())
+        if (checkCorrect(s)) {
+            answer += 1;
+        }
+        
+        s.push(s.shift());
     }
     
     return answer;
