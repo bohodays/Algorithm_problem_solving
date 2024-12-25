@@ -38,6 +38,7 @@ def solution(str1, str2):
             else:
                 AorB += [item for _ in range(str2_array.count(item))]
 
+    print(len(AandB), len(AorB))
     if len(AandB) == 0 and len(AorB) == 0:
         return 65536
     return int((len(AandB) / len(AorB)) * 65536)
