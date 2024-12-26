@@ -1,19 +1,21 @@
 function solution(word) {
-    const wordObj = {};
-    const vowels = ["A", "E", "I", "O", "U"];
-    let index = 1
+    const vowel = ["A", "E", "I", "O", "U"];
+    const dictionary = {};
+    let index = 1;
     
-    const dfs = (count, words) => {
-        if (count === 5) return;
+    const dfs = (word) => {
+        // 종료조건
+        if (word.length === 5) return;
         
-        for (const item of vowels) {
-            wordObj[words + item] = index;
+        for (const item of vowel) {
+            const nextWord = word + item;
+            dictionary[nextWord] = index;
             index++;
-            dfs(count + 1, words + item)
+            dfs(nextWord);
         }
-        
     }
     
-    dfs(0, "")
-    return wordObj[word];
+    dfs("");
+    
+    return dictionary[word];
 }
