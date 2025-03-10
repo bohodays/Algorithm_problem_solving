@@ -1,40 +1,47 @@
 function solution(board) {
-    const rows = board.length;
-    const cols = board[0].length;
-    const directions = [[-1, 0], [1, 0], [0, -1], [0, 1]]; // 상, 하, 좌, 우
-    let start, goal;
+    let answer = 0;
+    const d = [[-1, 0], [1, 0], [0, -1], [0, 1]]; // 상하좌우
+    const n = board.length;
+    const m = board[0].length;
+    const visited = Array(n).fill().map((_) => Array(m).fill(false));
     
-    // 시작 위치(R)와 목표 위치(G) 찾기
-    for (let i = 0; i < rows; i++) {
-        for (let j = 0; j < cols; j++) {
-            if (board[i][j] === 'R') start = [i, j];
-            if (board[i][j] === 'G') goal = [i, j];
+    // 시작위치, 목표지점 찾기
+    let start, end; 
+    for (let i = 0; i < n; i++) {
+        for (let j = 0; j < m; j++) {
+            if (board[i][j] === "R") start = [i, j];
+            else if (board[i][j] === "G") end = [i, j];
         }
     }
     
-    const queue = [[...start, 0]]; // [x, y, 이동 횟수]
-    const visited = Array.from({ length: rows }, () => Array(cols).fill(false));
+    // 시작 위치 방문 처리
     visited[start[0]][start[1]] = true;
     
+    // BFS 수행
+    const queue = [[...start, 0]];
+    
     while (queue.length) {
-        const [x, y, moves] = queue.shift();
+        const [x, y, curr] = queue.shift();
         
-        if (x === goal[0] && y === goal[1]) return moves;
+        if (board[x][y] === "G") return curr;
         
-        for (let [dx, dy] of directions) {
-            let nx = x, ny = y;
+        for (let i = 0; i < 4; i++) {
+            let [nx, ny] = [x, y];
+            const [dx, dy] = [d[i][0], d[i][1]]
             
             // 장애물 또는 경계를 만날 때까지 이동
-            while (nx + dx >= 0 && nx + dx < rows && ny + dy >= 0 && ny + dy < cols && board[nx + dx][ny + dy] !== 'D') {
+            while (0 <= nx + dx && nx + dx < n && 0 <= ny + dy && ny + dy < m && board[nx + dx][ny + dy] !== "D") {
                 nx += dx;
                 ny += dy;
             }
             
             if (!visited[nx][ny]) {
                 visited[nx][ny] = true;
-                queue.push([nx, ny, moves + 1]);
+                queue.push([nx, ny, curr + 1])
             }
+            
         }
+        
     }
     
     return -1;
