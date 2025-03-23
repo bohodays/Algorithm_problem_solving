@@ -1,49 +1,52 @@
 function solution(expression) {
     let answer = 0;
-    const numbers = [];
-    const operator = [];
-    let uniqueOperator;
+    const allExpressions = []
+    const onlyOperations = []
+    const onlyNumbers = []
     
-    // 사용된 숫자와 연산자 분리
-    let temp = "";
-    for (let i = 0; i < expression.length; i++) {
-        const currItem = expression[i];
-        if (isNaN(currItem)) {
-            numbers.push(+temp);
-            operator.push(currItem)
-            temp = "";
+    let tmp = ""
+    for (const item of expression) {
+        if (item === "+" || item === "-" || item === "*") {
+            onlyNumbers.push(+tmp);
+            onlyOperations.push(item);
+            allExpressions.push(+tmp);
+            allExpressions.push(item);
+            tmp = ""
         } else {
-            temp += currItem;
+            tmp += item;
         }
     }
-    if (temp) numbers.push(+temp);
     
-    uniqueOperator = [...new Set(operator)]
-
-    // 사용된 연산자들의 순열 구하기
-    const visited = Array(uniqueOperator.length).fill(false);
-    const computedOperators = [];
-    const dfs = (result) => {
+    if (tmp) {
+        onlyNumbers.push(+tmp);
+        allExpressions.push(+tmp);
+    };
+    
+    const result = [...new Set([...onlyOperations])];
+    
+    // dfs로 우선순위 순열 구하기
+    const visited = Array(result.length).fill(false);
+    const rankArray = [];
+    const dfs = (arr) => {
         // 종료조건
-        if (result.length === uniqueOperator.length) {
-            computedOperators.push([...result]);
+        if (arr.length === result.length) {
+            rankArray.push([...arr]);
             return;
         }
         
-        for (let i = 0; i < uniqueOperator.length; i++) {
+        for (let i = 0; i < result.length; i++) {
             if (!visited[i]) {
                 visited[i] = true;
-                result.push(uniqueOperator[i]);
-                dfs(result);
+                arr.push(result[i]);
+                dfs(arr)
                 // 백트래킹
-                result.pop();
+                arr.pop();
                 visited[i] = false;
             }
         }
     }
-    dfs([]);
+    dfs([])
     
-    // 우선 순위 연산자를 대상으로 수식 계산하기
     const computedNumbers = (numberArray, operatorArray, keyOperator) => {
         const newNumberArray = [numberArray.shift()];
         const newOperatorArray = [];
@@ -67,17 +70,17 @@ function solution(expression) {
     }
     
     
-    for (let i = 0; i < computedOperators.length; i++) {
-        const currentRank = computedOperators[i];
-        let tempNumbers = [...numbers];
-        let tempOperator = [...operator];
-        
-        for (let j = 0; j < currentRank.length; j++) {
-            [tempNumbers, tempOperator] = computedNumbers(tempNumbers, tempOperator, currentRank[j]);
-            
-        }
+    // rankArray 기준으로 최대값 구하기
+    for (const rank of rankArray) {
+
+        let tempNumbers = [...onlyNumbers];
+        let tempOperator = [...onlyOperations];
+
+        rank.forEach((currRank) => {
+            [tempNumbers, tempOperator] = computedNumbers(tempNumbers, tempOperator, currRank);         
+        })
         answer = Math.max(answer, Math.abs(tempNumbers[0]));
     }
-    
+
     return answer;
 }
