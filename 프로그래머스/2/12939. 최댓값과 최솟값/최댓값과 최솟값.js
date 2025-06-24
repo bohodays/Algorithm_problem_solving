@@ -1,4 +1,4 @@
 function solution(s) {
-    s = s.split(" ").map((item) => +item);
-    return `${Math.min(...s)} ${Math.max(...s)}`;
+    const result = s.split(" ").map((num) => +num).sort((a, b) => a - b);
+    return `${result[0]} ${result[result.length - 1]}`;
 }
