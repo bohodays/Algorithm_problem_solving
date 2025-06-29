@@ -1,14 +1,13 @@
 function solution(n) {
-    const originOneCount = n.toString(2).split("").filter((item) => item === "1").length;
-    let checkValue = n + 1;
+    let target = n;
     while (true) {
-        const binaryNumber = checkValue.toString(2);
-        const oneCount = binaryNumber.split("").filter((item) => item === "1").length;
-        if (originOneCount === oneCount) {
-            break;
-        }
+        // 조건 1;
+        target++;
         
-        checkValue++;
+        // 조건 2
+        const nOneCount = n.toString(2).split("").filter((i) => i === "1").length;
+        const targetOneCount = target.toString(2).split("").filter((i) => i === "1").length;
+        
+        if (nOneCount === targetOneCount) return target;
     }
-    return checkValue;
 }
