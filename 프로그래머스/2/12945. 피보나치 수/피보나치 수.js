@@ -1,10 +1,9 @@
 function solution(n) {
-    var answer = 0;
-    const fiboArray = Array(100001).fill(0);
-    fiboArray[1] = 1;
+    let answer = 0;
+    const fibo = [0, 1];
     
-    for (let i = 2; i <= n; i++) {
-        fiboArray[i] = (fiboArray[i - 1] % 1234567) + (fiboArray[i - 2] % 1234567);
+    while (fibo.length !== n + 1) {
+        fibo.push(fibo[fibo.length - 1]  % 1234567 + fibo[fibo.length - 2]  % 1234567)
     }
-    return fiboArray[n] % 1234567;
+    return fibo[fibo.length - 1] % 1234567;
 }
