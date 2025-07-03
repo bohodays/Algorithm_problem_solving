@@ -1,14 +1,16 @@
 function solution(n)
 {
-    let answer = 0;
+    let ans = 0;
+    
     while (n) {
-        if (n % 2 === 0) {
-            n /= 2;
-        } else {
+        // 홀수이면
+        if (n % 2 === 1) {
             n--;
-            answer++;
+            ans++;
         }
+        // 짝수이면
+        else n /= 2;
     }
 
-    return answer;
+    return ans;
 }
