@@ -1,23 +1,24 @@
 function solution(k, tangerine) {
-    var answer = 0;
+    let answer = 0;
     
-    const countObj = {};
+    // Map에 크기별 귤의 개수 저장
+    const countMap = new Map();
     tangerine.forEach((item) => {
-        if (item in countObj) {
-            countObj[item] += 1;
+        const currentItem = countMap.get(item);
+        if (currentItem) {
+            countMap.set(item, currentItem + 1);
         } else {
-            countObj[item] = 1;
+            countMap.set(item, 1)
         }
     })
     
-    const countArray = Object.entries(countObj).sort((a, b) => b[1] - a[1]);
-    for (const item of countArray) {
-        k -= item[1];
-        answer++;
-        if (k <= 0) {
-            break;
-        }
+    const countArray = [...countMap.values()].sort((a, b) => b - a)
+    for (let i = 0; i < countArray.length; i++) {
+        answer += 1;
+        k -= countArray[i];
+        
+        if (k <= 0) return answer;
     }
-    
+
     return answer;
 }
