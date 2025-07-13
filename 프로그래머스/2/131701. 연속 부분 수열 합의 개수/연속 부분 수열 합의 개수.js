@@ -1,15 +1,16 @@
 function solution(elements) {
-    let answer = 0;
-    const sumSet = new Set();
-    const n = elements.length
+    const n = elements.length;
+    elements = elements.concat(elements);
+    const result = new Set();
     
     for (let i = 0; i < n; i++) {
-        let sumValue = 0;
-        for (let j = i; j < n + i; j++) {
-            sumValue += elements[j % n];
-            sumSet.add(sumValue);
+        const temp = [];
+        for (let j = 0; j < n; j++) {
+            temp.push(elements[i + j]);
+            result.add(temp.reduce((sum, num) => sum + num), 0);
         }
     }
     
-    return sumSet.size;
+    return result.size;
 }
+
