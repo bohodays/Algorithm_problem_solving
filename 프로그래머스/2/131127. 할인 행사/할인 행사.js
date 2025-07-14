@@ -1,29 +1,18 @@
 function solution(want, number, discount) {
-    let answer = 0;
-    const totalCount = number.reduce((sum, num) => sum + num);
-    const wantObj = {};
-    want.forEach((item, index) => wantObj[item] = number[index]);
-    const currentObj = {};
+    var answer = 0;
+    const wantRef = {};
+    want.forEach((item, index) => wantRef[item] = number[index]);
     
-    for (let i = 0; i <= discount.length - totalCount; i++) {
-        if (!Object.keys(currentObj).length) {
-            const targetRangeArray = discount.slice(i, i + totalCount);
-            targetRangeArray.forEach((item, index) => currentObj[item] = currentObj[item] ? currentObj[item] + 1 : 1);
-        } else {
-            const [prevItem, lastItem] = [discount[i - 1], discount[i + totalCount - 1]];
-            currentObj[prevItem] = currentObj[prevItem] ? currentObj[prevItem] - 1 : 0;
-            currentObj[lastItem] = currentObj[lastItem] ? currentObj[lastItem] + 1 : 1;
-        }
+    for (let i = 0; i <= discount.length - 10;i++) {
+        const discountProducts = discount.slice(i, i + 10);
         
-        // wantObj와 currentObj가 같은지 비교
-        let flag = true;
-        for (const item of Object.keys(wantObj)) {
-            if (wantObj[item] !== currentObj[item]) {
-               flag = false;
-                break;
-            }
-        }
-        if (flag) answer += 1;
+        const tempRef = {};
+        discountProducts.forEach((item, index) => tempRef[item] ? tempRef[item] += 1 : tempRef[item] = 1);
+        
+        const isSame = Object.keys(wantRef).every((key) => wantRef[key] === tempRef[key])
+        if (isSame) answer++;
     }
+    
+    
     return answer;
 }
