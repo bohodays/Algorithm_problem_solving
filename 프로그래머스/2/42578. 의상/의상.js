@@ -1,16 +1,18 @@
 function solution(clothes) {
     let answer = 1;
-    const clothesObj = {};
     
-    for (const item of clothes) {
-        if (clothesObj[item[1]]) clothesObj[item[1]].push(item[0])
-        else {
-            clothesObj[item[1]] = [item[0]];
+    const clothesMap = new Map();
+    clothes.forEach((cloth) => {
+        const [name, category] = cloth;
+        if (clothesMap.has(category)) {
+            clothesMap.set(category, [...clothesMap.get(category), name])
+        } else {
+            clothesMap.set(category, [name])
         }
-    }
+    })
     
-    for (const item of Object.keys(clothesObj)) {
-        answer *= (clothesObj[item].length + 1)
+    for (const [key, value] of clothesMap) {
+        answer *= value.length + 1;
     }
     
     return answer - 1;
