@@ -1,22 +1,24 @@
 function solution(progresses, speeds) {
     const answer = [];
-
-    while (progresses.length) {
-        if (progresses[0] >= 100) {
-            
-            let count = 0;
-            while (progresses.length && progresses[0] >= 100) {
-                progresses.shift();
-                speeds.shift();
-                count++;
+    let currentIndex = 0;
+    const n = progresses.length;
+    
+    while (currentIndex <= n - 1) {
+        progresses.forEach((progress, index) => {
+            progresses[index] += speeds[index];
+        })
+        
+        let result = 0;
+        for (let i = currentIndex; i < n; i++) {
+            if (progresses[i] >= 100) {
+                currentIndex++;
+                result++;
+            } else {
+                break;
             }
-            answer.push(count);
-            
-        } else {
-            progresses.forEach((item, index) => {
-                progresses[index] += speeds[index];
-            })
         }
+        
+        if (result > 0) answer.push(result);
     }
     
     return answer;
