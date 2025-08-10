@@ -1,14 +1,35 @@
 function solution(s) {
     const answer = [];
-    s = s.slice(1, s.length - 2).split("},").map((items) => {
-        return items.slice(1).split(",").map((item) => +item)
-    }).sort((a, b) => a.length - b.length);
     
-    for (const items of s) {
-        for (const item of items) {
-            if (!answer.includes(item)) answer.push(item);   
+    s = s.slice(0, s.length - 1);
+    
+    const result = [];
+    let stack = [];
+    let num = "";
+    for (const item of s) {
+        if (isNaN(item)) {
+            if (item === "}") {
+                stack.push(Number(num));
+                result.push([...stack]);
+                stack = [];
+                num = "";
+            } else if (num && item === ",") {
+                stack.push(Number(num));
+                num = "";
+            }
+        } else {
+            num += item;
         }
-
     }
+        
+    result.sort((a, b) => a.length - b.length);
+    result.forEach((row) => {
+        row.forEach((num) => {
+            if (!answer.includes(num)) {
+                answer.push(num);
+            }
+        })
+    })
+    
     return answer;
 }
