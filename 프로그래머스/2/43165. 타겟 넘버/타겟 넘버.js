@@ -1,11 +1,10 @@
 function solution(numbers, target) {
-    var answer = 0;
+    let answer = 0;
     
     const dfs = (sumValue, count) => {
+        // 종료 조건
         if (count === numbers.length) {
-            if (sumValue === target) {
-                answer++;
-            }
+            if (sumValue === target) answer++;
             return;
         }
         
