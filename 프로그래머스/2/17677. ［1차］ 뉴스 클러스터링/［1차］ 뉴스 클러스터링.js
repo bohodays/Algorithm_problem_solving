@@ -1,58 +1,38 @@
-const partternEng = (str) => {
-    const pattern_eng = /[a-zA-Z]/;
-    
-    // 특수문자이면 false 리턴
-    if (str === ' ') {
-        return false;
-    } else if (!pattern_eng.test(str)) {
-        return false;
-    } else {
-        return true;
+// 문자열을 입력받아 두글자씩 끊어서 집합을 만드는 함수
+// 특수문자는 제외하며, 집합의 결과는 객체 형태로 반환함.
+const makeObject = (str) => {
+    const ref = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    const result = {};
+    for (let i = 0; i < str.length - 1; i++) {
+        const [str1, str2] = [str[i].toUpperCase(), str[i + 1].toUpperCase()];
+        if (ref.includes(str1) && ref.includes(str2)) {
+            result[str1 + str2] = (result[str1 + str2] ?? 0) + 1;
+        }
     }
+    return result;
 }
-
 
 function solution(str1, str2) {
     let answer = 0;
-    const str1Array = [];
-    const str2Array = [];
+    const str1ToObj = makeObject(str1);
+    const str2ToObj = makeObject(str2);
     
-    // 두 글자씩 끊어서 배열로 만들기
-    for (let i = 0; i < str1.length - 1; i++) {
-        if (partternEng(str1[i]) && partternEng(str1[i + 1])) {
-            str1Array.push((str1[i] + str1[i + 1]).toUpperCase())
+    const intersection = Object.keys(str1ToObj).map((key) => {
+        if (Object.keys(str2ToObj).includes(key)) {
+            return Math.min(str1ToObj[key], str2ToObj[key]);
         }
+        return 0;
+    }).reduce((sum, num) => sum + num, 0);
+    
+    const unionArray = [];
+    for (const key of Object.keys(str1ToObj)) {
+        if (str2ToObj[key]) unionArray.push(Math.max(str1ToObj[key], str2ToObj[key]));
+        else unionArray.push(str1ToObj[key])
     }
-    for (let i = 0; i < str2.length - 1; i++) {
-        if (partternEng(str2[i]) && partternEng(str2[i + 1])) {
-            str2Array.push((str2[i] + str2[i + 1]).toUpperCase())
-        }
+    for (const key of Object.keys(str2ToObj)) {
+        if (!str1ToObj[key]) unionArray.push(str2ToObj[key]);
     }
+    const union = unionArray.reduce((sum, num) => sum + num, 0)
     
-    const refSet = new Set([...str1Array, ...str2Array])
-    
-    // 교집합 만들기
-    let intersection = 0;
-    for (const item of refSet) {
-        if (str1Array.includes(item) && str2Array.includes(item)) {
-            intersection += Math.min(str1Array.filter((str) => str === item).length, str2Array.filter((str) => str === item).length) 
-        }
-    }
-    
-    // 합집합 만들기
-    let union = 0;
-    for (const item of refSet) {
-        if (str1Array.includes(item) && str2Array.includes(item)) {
-            union += Math.max(str1Array.filter((str) => str === item).length, str2Array.filter((str) => str === item).length) 
-        } else if (str1Array.includes(item)) {
-            union += str1Array.filter((str) => str === item).length;
-        } else if (str2Array.includes(item)) {
-            union += str2Array.filter((str) => str === item).length;
-        }
-    }
-    
-    if (!intersection && !union) answer = 1;
-    else answer = intersection / union
-    
-    return parseInt(answer * 65536);
+    return parseInt((union ? intersection / union : 1) * 65536)
 }
