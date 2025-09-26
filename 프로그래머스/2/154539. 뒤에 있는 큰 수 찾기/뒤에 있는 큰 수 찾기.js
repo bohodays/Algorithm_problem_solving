@@ -1,14 +1,18 @@
 function solution(numbers) {
-    const answer = Array(numbers.length).fill(-1);
+    const n = numbers.length
+    const answer = Array(n).fill(-1);
     
     const stack = [];
-    for (let i = 0; i < numbers.length; i++) {
+    for (let i = n - 1; i >= 0; i--) {
+        const currentItem = numbers[i];
         
-        while (stack.length && numbers[stack[stack.length - 1]] < numbers[i]) {
-            answer[stack.pop()] = numbers[i];    
+        while (stack.length && currentItem >= stack[stack.length - 1]) {
+            stack.pop();
         }
         
-        stack.push(i);
+        if (stack.length) answer[i] = stack[stack.length - 1];
+        
+        stack.push(currentItem);
     }
     
     return answer;
