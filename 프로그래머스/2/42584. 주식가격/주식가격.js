@@ -1,22 +1,16 @@
 function solution(prices) {
     const answer = [];
-    let index = 0;
+    const n = prices.length;
     
-    while (index !== prices.length - 1) {
-        const currentPrice = prices[index];
-        
-        let time = 0;
-        for (let i = index + 1; i < prices.length; i++) {
-            time++;
-            if (currentPrice > prices[i]) {
-                break;
+    for (let i = 0; i < n; i++) {
+            let time = 0;
+            const price = prices[i];
+            for (let j = i + 1; j < n; j++) {
+                time++;
+                if (price > prices[j]) break;
             }
-        }
-        answer.push(time);
-        index++;
+            answer.push(time);
     }
-    
-    answer.push(0);
     
     return answer;
 }
