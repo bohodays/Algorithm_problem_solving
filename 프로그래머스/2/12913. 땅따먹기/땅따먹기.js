@@ -1,12 +1,13 @@
 function solution(land) {
+    let answer = 0;
+    const n = land.length;
     
-    for (let i = 1; i < land.length; i++) {
-        for (let j = 0; j < land[0].length; j++) {
-            const copyArray = [...land[i - 1]];
-            copyArray[j] = 0;
-            land[i][j] += Math.max(...copyArray);
+    for (let i = 1; i < n; i++) {
+        for (let j = 0; j < 4; j++) {
+            const beforeRow = [...land[i - 1].slice(0, j), ...land[i - 1].slice(j + 1, 4)]
+            land[i][j] += Math.max(...beforeRow)
         }
     }
     
-    return Math.max(...land[land.length - 1]);
+    return Math.max(...land[n - 1]);
 }
