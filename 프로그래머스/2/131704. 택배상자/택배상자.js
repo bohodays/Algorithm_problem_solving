@@ -2,22 +2,18 @@ function solution(order) {
     let answer = 0;
     
     const stack = [];
-    let index = 0;
-    for (let i = 1; i <= order.length; i++) {
-        if (i === order[index]) {
-            index++;
-            answer++;
-        } else {
-            stack.push(i);
-        }
+    order = order.reverse();
+    const boxes = Array(order.length).fill().map((_, i) => i + 1);
+    
+    boxes.forEach((box, index) => {
+        stack.push(box);
         
-        while (stack.length && stack[stack.length - 1] === order[index]) {
+        while (stack.length && stack[stack.length - 1] === order[order.length - 1]) {
             stack.pop();
-            index++;
+            order.pop();
             answer++;
         }
-        
-    }
+    })
     
     return answer;
 }
