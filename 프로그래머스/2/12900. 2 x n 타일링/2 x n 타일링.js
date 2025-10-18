@@ -1,13 +1,12 @@
 function solution(n) {
-    let answer = 0;
+    const answer = [0, 1, 2];
     
-    const result = Array(n + 1).fill(0);
-    result[0] = 1;
-    result[1] = 1;
+    if (n <= 2) return answer[n];
     
-    for (let i = 2; i <= n; i++) {
-        result[i] = (result[i - 1] % 1000000007) + (result[i - 2] % 1000000007);
+    while (answer.length <= n) {
+        const lastIndex = answer.length;
+        answer.push((answer[lastIndex - 1] % 1000000007) + (answer[lastIndex - 2] % 1000000007));
     }
     
-    return result[n] % 1000000007;
+    return answer[n] % 1000000007;
 }
