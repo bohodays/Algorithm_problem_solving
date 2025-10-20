@@ -1,43 +1,47 @@
-const transferMinute = (time) => {
-    const [hour, minute] = time.split(":").map((item) => +item);
-    return hour * 60 + minute
+const transMinutes = (time) => {
+    const [h, m] = time.split(":").map(item => +item);
+    return h * 60 + m;
 }
 
 function solution(fees, records) {
-    const enter = {};
-    const out = {};
-    const totalMinute = {};
-    const [defaultMinute, defaultFee, unitMinute, unitFee] = fees;
+    const carsRecords = {}; // current, total, status
+    const stack = [];
+    const [defaultTime, defaultFee, unitTime, unitFee] = fees;
     
-    // 입차, 출차 내역으로 주차시간 계산
-    for (const record of records) {
-        const [time, carId, type] = record.split(" ");
+    records.forEach((item) => {
+        const [time, carNumber, status] = item.split(" ")
         
-        if (type === "IN") {
-            enter[carId] = transferMinute(time);
-        } else {
-            totalMinute[carId] = totalMinute[carId] ? totalMinute[carId] + (transferMinute(time) - enter[carId]) : (transferMinute(time) - enter[carId]);
-            enter[carId] = false;
+        // 기록이 없는 경우
+        if (!carsRecords[carNumber]) {
+            carsRecords[carNumber] = [transMinutes(time), 0, status]
         }
-    }
-    
-    // 입차 내역만 있는 경우 체크
-    for (const key in enter) {
-        if (enter[key] !== false) {
-            totalMinute[key] = totalMinute[key] ? totalMinute[key] + (transferMinute("23:59") - enter[key]) : (transferMinute("23:59") - enter[key]);       
+        // 기록이 있는 경우
+        else {
+            // 입차인 경우
+            if (status === "IN") {
+                carsRecords[carNumber] = [transMinutes(time), carsRecords[carNumber][1], status]
+            }
+            // 출차인 경우
+            else {
+                const [startTime, totalMinute] = carsRecords[carNumber];
+                carsRecords[carNumber] = [0, totalMinute + (transMinutes(time) - startTime), status]
+            }
+            
         }
-    }
-
-    let result = [];
-    for (const item in totalMinute) {
-        if (totalMinute[item] <= defaultMinute) {
-            result.push([item, defaultFee])
-        } else {
-            result.push([item, defaultFee + (Math.ceil((totalMinute[item] - defaultMinute) / unitMinute)) * unitFee]);
+    })
+    
+    // 출차 기록이 없는 경우 체크
+    Object.entries(carsRecords).forEach(([key, value]) => {
+        const [currentTime, totalTime, status] = value;
+        if (status === "IN") {
+            carsRecords[key][1] += transMinutes("23:59") - currentTime;
         }
-    }
+    })
     
-    result = result.sort((a, b) => a[0] - b[0]).map((item) => item[1]);
+    const answer = Object.entries(carsRecords).sort((a, b) => a[0] - b[0]).map(([key, value]) => {
+        const [_, totalMinutes] = value;
+        return totalMinutes > defaultTime ? defaultFee + Math.ceil((totalMinutes - defaultTime) / unitTime) * unitFee : defaultFee
+    })
     
-    return result;
+    return answer;
 }
