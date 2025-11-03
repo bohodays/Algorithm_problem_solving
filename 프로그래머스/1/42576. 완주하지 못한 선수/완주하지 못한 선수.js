@@ -1,19 +1,18 @@
 function solution(participant, completion) {
-    const ref = {};
-    completion.forEach((item) => {
-        if (item in ref) {
-            ref[item] += 1;
-        } else {
-            ref[item] = 1;
-        }
+    var answer = '';
+    const checkMap = {};
+    
+    participant.forEach((person) => {
+        checkMap[person] = checkMap[person] ? checkMap[person] + 1 : 1;
+    });
+    
+    completion.forEach((person) => {
+        checkMap[person] = checkMap[person] ? checkMap[person] - 1 : 0;
     })
     
-    for (const target of participant) {
-        if (!ref[target]) {
-            return target;
-        } else {
-            ref[target] -= 1;
+    for (const [key, value] of Object.entries(checkMap)) {
+        if (value === 1) {
+            return key
         }
     }
-    
 }
