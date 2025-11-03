@@ -1,17 +1,13 @@
 function solution(clothes) {
     let answer = 1;
     
-    const clothesMap = new Map();
-    clothes.forEach((cloth) => {
-        const [name, category] = cloth;
-        if (clothesMap.has(category)) {
-            clothesMap.set(category, [...clothesMap.get(category), name])
-        } else {
-            clothesMap.set(category, [name])
-        }
+    const clothesRef = {};
+    clothes.forEach(([cloth, type]) => {
+        if (clothesRef[type]) clothesRef[type].push(cloth);
+        else clothesRef[type] = [cloth];
     })
     
-    for (const [key, value] of clothesMap) {
+    for (const value of Object.values(clothesRef)) {
         answer *= value.length + 1;
     }
     
