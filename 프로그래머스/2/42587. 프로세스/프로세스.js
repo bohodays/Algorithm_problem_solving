@@ -1,24 +1,22 @@
 function solution(priorities, location) {
-    let answer = 0;
+    let answer = 1;
     
-    priorities = priorities.map((item, index) => ([item, index]))
+    priorities = priorities.map((item, index) => [item, index]);
     
     while (true) {
-        const [currentItem, currentIndex] = priorities.shift();
+        const currentItem = priorities.shift();
+        const priorityCheck = priorities.some((item) => item[0] > currentItem[0]);
         
-        const check = priorities.filter((item) => item[0] > currentItem).length;
-        
-        if (check) {
-            priorities.push([currentItem, currentIndex])
+        if (priorityCheck) {
+            priorities.push(currentItem);
         } else {
-            if (currentIndex === location) {
-                return answer + 1;
+            if (currentItem[1] === location) {
+                return answer;
             } else {
                 answer++;
             }
         }
     }
-
     
     return answer;
 }
