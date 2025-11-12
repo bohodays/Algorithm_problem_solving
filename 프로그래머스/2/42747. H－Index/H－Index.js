@@ -1,14 +1,14 @@
 function solution(citations) {
     let answer = 0;
-    const n = Math.max(...citations);
     
-    for (let i = 0; i <= n; i++) {
+    for (let h = 0; h <= Math.max(...citations); h++) {
         // h번 이상 인용된 논문이 h편 이상인지 확인
-        const check1 = citations.filter((item) => item >= i).length >= i;
-        // 나머지 논문이 h번 이하 인용되었는지 확인
-        const check2 = citations.filter((item) => item < i).length <= i;
-        
-        if (check1 && check2) answer = i;
+        if (citations.filter((citation) => citation >= h).length >= h) {
+            // 나머지 논문이 h번 이하 인용되었는지 확인
+            if (citations.filter((citation) => citation < h).length <= h) {
+                answer = h;
+            }
+        }
     }
     
     return answer;
