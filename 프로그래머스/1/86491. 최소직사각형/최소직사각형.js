@@ -1,11 +1,11 @@
 function solution(sizes) {
-    sizes.forEach((item) => {
-        item.sort((a, b) => a - b);
+    let width = 0, height = 0;
+    
+    sizes.forEach((size) => size.sort((a, b) => a - b));
+    sizes.forEach(([currentWidth, currentHeight]) => {
+        width = Math.max(currentWidth, width);
+        height = Math.max(currentHeight, height);
     })
-    let [w, h] = [0 ,0];
-    sizes.forEach((item) => {
-        w = Math.max(w, item[0]);
-        h = Math.max(h, item[1]);
-    })
-    return w * h;
+    
+    return width * height;
 }
