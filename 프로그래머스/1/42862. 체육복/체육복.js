@@ -1,31 +1,28 @@
 function solution(n, lost, reserve) {
     let answer = 0;
+    const clothCount = {};
+    const nArray = Array(n).fill().map((_, i) => i + 1);
     
-    const students = Array(n + 1).fill(1);
-    lost.forEach((item) => students[item] -= 1);
-    reserve.forEach((item) => students[item] += 1);
-
-    for (let i = 0; i < students.length; i++) {
-        if (i === 0) continue;
-        if (students[i] === 0) {
-            let flag = false;
-            // 앞번호의 학생 확인
-            if (i - 1 >= 1) {
-                if (students[i - 1] >= 2) {
-                    students[i - 1] -= 1;
-                    students[i] = 1;
-                    flag = true;
-                }
-            }
-            // 뒷번호의 학생 확인
-            if (!flag && i + 1 < students.length) {
-                if (students[i + 1] >= 2) {
-                    students[i + 1] -= 1;
-                    students[i] = 1;
-                }
+    nArray.forEach((num) => {
+        if (lost.includes(num) && reserve.includes(num)) clothCount[num] = 1;
+        else if (lost.includes(num)) clothCount[num] = 0;
+        else if (reserve.includes(num)) clothCount[num] = 2;
+        else clothCount[num] = 1;
+    })
+    
+    nArray.forEach((num) => {
+        if (clothCount[num] === 0) {
+            if (clothCount[num - 1] && clothCount[num - 1] > 1) {
+                clothCount[num - 1] -= 1;
+                clothCount[num] = 1;
+            } else if (clothCount[num + 1] && clothCount[num + 1] > 1) {
+                clothCount[num + 1] -= 1;
+                clothCount[num] = 1;
             }
         }
-    }
+    })
     
-    return students.filter((item) => item >= 1).length - 1;
+    answer += Object.values(clothCount).filter((num) => num >= 1).length;
+    
+    return answer;
 }
