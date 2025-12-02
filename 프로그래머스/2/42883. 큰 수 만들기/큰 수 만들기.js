@@ -1,24 +1,14 @@
 function solution(number, k) {
-    const stack = [];
-    let removeCount = 0;
-    
-    for (let i = 0; i < number.length; i++) {
-        const currentNumber = number[i];
-        
-        while (stack.length && stack[stack.length - 1] < currentNumber && removeCount < k) {
-            stack.pop();
-            removeCount++;
-        }
-        
-        stack.push(currentNumber);
+  const stack = [];
+
+  for (const num of number) {
+    while (k > 0 && stack.length && stack[stack.length - 1] < num) {
+      stack.pop();
+      k--;
     }
-    
-    // 9876543, 2 -> 이러한 케이스 고려
-    while (removeCount < k) {
-        stack.pop();
-        removeCount++;
-    }
-        
-    
-    return stack.join("");
+    stack.push(num);
+  }
+
+  // 아직 k가 남아 있으면 뒤에서 k개 제거
+  return stack.slice(0, stack.length - k).join("");
 }
