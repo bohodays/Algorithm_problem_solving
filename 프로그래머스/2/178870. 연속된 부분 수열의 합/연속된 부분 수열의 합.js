@@ -1,24 +1,28 @@
-// stack을 이용해서 shift를 사용하면 시간 초과가 발생함.
 function solution(sequence, k) {
-    let answer = [];
+    const answer = [];
     
-    let sumValue = 0;
-    let [start, end] = [0, 0];
+    let start = 0;
+    let total = 0;
     for (let i = 0; i < sequence.length; i++) {
-        sumValue += sequence[i]
+        total += sequence[i];
         
-        while (sumValue > k) {
-            sumValue -= sequence[start];
-            start += 1;
+        while (total > k) {
+            total -= sequence[start];
+            start++;
         }
         
-        if (sumValue === k) {
-            end = i;
-            answer.push([start, end]);
+        if (total === k) {
+            answer.push([start, i]);
         }
     }
     
-    answer = answer.sort((a, b) => (a[1] - a[0]) - (b[1] - b[0]));
+    answer.sort((a, b) => {
+        if (b[1] - b[0] === a[1] - a[0]) {
+            return a[0] - b[0];
+        } else {
+            return (a[1] - a[0]) - (b[1] - b[0]);
+        }
+    })
     
     return answer[0];
 }
