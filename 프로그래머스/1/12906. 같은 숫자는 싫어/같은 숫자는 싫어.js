@@ -2,10 +2,10 @@ function solution(arr)
 {
     const answer = [];
 
-    arr.forEach((item) => {
-        if (answer.length === 0) answer.push(item);
+    arr.forEach((num) => {
+        if (!answer.length) answer.push(num);
         else {
-            if (answer[answer.length - 1] !== item) answer.push(item);
+            if (answer[answer.length - 1] !== num) answer.push(num);
         }
     })
     
