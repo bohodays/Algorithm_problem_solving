@@ -1,21 +1,21 @@
 function solution(progresses, speeds) {
     const answer = [];
     
-    let currentIndex = 0;
-    while (currentIndex !== progresses.length) {
+    let currentCount = 0;
+    const limitCount = progresses.length;
+    while (currentCount < limitCount) {
         
-        // 기능 개선 작업 수행
-        progresses.forEach((progress, i) => {
+        for (let i = currentCount; i < limitCount; i++) {
             progresses[i] += speeds[i];
-        })
-        
-        let count = 0;
-        while (progresses[currentIndex] >= 100) {
-            count++;
-            currentIndex++;
         }
         
-        if (count > 0) answer.push(count);
+        let result = 0;
+        while (progresses[currentCount] >= 100) {
+            currentCount++;
+            result++;
+        }
+        
+        if (result) answer.push(result);
     }
     
     return answer;
