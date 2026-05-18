@@ -2,14 +2,16 @@ function solution(citations) {
     let answer = 0;
     
     for (let h = 0; h <= Math.max(...citations); h++) {
-        // h번 이상 인용된 논문이 h편 이상인지 확인
-        if (citations.filter((citation) => citation >= h).length >= h) {
-            // 나머지 논문이 h번 이하 인용되었는지 확인
-            if (citations.filter((citation) => citation < h).length <= h) {
-                answer = h;
-            }
-        }
-    }
+        const stack1 = [];
+        const stack2 = [];
+        
+        citations.forEach((citation) => {
+            if (citation >= h) stack1.push(citation);
+            else stack2.push(citation);
+        });
+        
+        if (stack1.length >= h && stack2.length <= h) answer = Math.max(answer, h);
+    };
     
     return answer;
 }
