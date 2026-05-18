@@ -1,22 +1,29 @@
 function solution(priorities, location) {
-    let answer = 1;
+    const ref = [];
+    const queue = [];
+    priorities.forEach((priority, index) => {
+        queue.push([index, priority]);
+        ref.push(priority);
+    })
+    ref.sort();
     
-    priorities = priorities.map((item, index) => [item, index]);
-    
+    let count = 1;
     while (true) {
-        const currentItem = priorities.shift();
-        const priorityCheck = priorities.some((item) => item[0] > currentItem[0]);
+        const [process, priority] = queue[0];
         
-        if (priorityCheck) {
-            priorities.push(currentItem);
-        } else {
-            if (currentItem[1] === location) {
-                return answer;
-            } else {
-                answer++;
+        // 가장 높은 우선순위인지 확인
+        if (priority === ref[ref.length - 1]) {
+            ref.pop();
+            // location 대상인지 확인
+            if (process === location) return count;
+            else {
+                count++;
+                queue.shift();
             }
+        } else {
+            queue.push(queue.shift());
         }
     }
     
-    return answer;
+    return count;
 }
