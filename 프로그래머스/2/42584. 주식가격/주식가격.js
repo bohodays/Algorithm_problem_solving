@@ -1,13 +1,11 @@
 function solution(prices) {
     const answer = [];
-    const n = prices.length;
     
-    for (let i = 0; i < n; i++) {
+    for (let i = 0; i < prices.length; i++) {
         let time = 0;
-        const currentPrice = prices[i];
-        for (let j = i + 1; j < n; j++) {
+        for (let j = i + 1; j < prices.length; j++) {
             time++;
-            if (currentPrice > prices[j]) break;
+            if (prices[i] > prices[j]) break;
         }
         answer.push(time);
     }
