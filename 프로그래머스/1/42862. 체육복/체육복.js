@@ -1,28 +1,20 @@
 function solution(n, lost, reserve) {
-    let answer = 0;
-    const clothCount = {};
-    const nArray = Array(n).fill().map((_, i) => i + 1);
+    const checkArray = Array(n).fill(1);
+    lost.forEach((num) => checkArray[num - 1]--);
+    reserve.forEach((num) => checkArray[num - 1]++);
     
-    nArray.forEach((num) => {
-        if (lost.includes(num) && reserve.includes(num)) clothCount[num] = 1;
-        else if (lost.includes(num)) clothCount[num] = 0;
-        else if (reserve.includes(num)) clothCount[num] = 2;
-        else clothCount[num] = 1;
-    })
-    
-    nArray.forEach((num) => {
-        if (clothCount[num] === 0) {
-            if (clothCount[num - 1] && clothCount[num - 1] > 1) {
-                clothCount[num - 1] -= 1;
-                clothCount[num] = 1;
-            } else if (clothCount[num + 1] && clothCount[num + 1] > 1) {
-                clothCount[num + 1] -= 1;
-                clothCount[num] = 1;
+    checkArray.forEach((num, i) => {
+        if (checkArray[i] === 0) {
+            // 앞번호 확인
+            if (i !== 0 && checkArray[i - 1] === 2) {
+                checkArray[i - 1]--;
+                checkArray[i]++;
+            } else if (i !== n - 1 && checkArray[i + 1] === 2) {
+                checkArray[i + 1]--;
+                checkArray[i]++;
             }
         }
     })
-    
-    answer += Object.values(clothCount).filter((num) => num >= 1).length;
-    
-    return answer;
+
+    return checkArray.filter((num) => num !== 0).length;
 }
