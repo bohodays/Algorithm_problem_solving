@@ -1,31 +1,25 @@
-// 변환할 수 있는지 체크하는 함수
-const isCanTrans = (target1, target2) => {
+function isCanTrans(begin, target) {
     let count = 0;
-    
-    for (let i = 0; i < target1.length; i++) {
-        if (target1[i] != target2[i]) count++;
+    for (let i = 0; i < begin.length; i++) {
+        if (begin[i] !== target[i]) count++;
     }
-    
     return count === 1 ? true : false;
 }
 
 function solution(begin, target, words) {
-    let answer = 0;
-    
-    const visited = {[begin]: 0};
+    const visited = {[begin]: 0};    
     const queue = [begin];
     
-    // bfs로 구현
     while (queue.length) {
-        const currentItem = queue.shift();
-        
-        for (const word of words) {
-            if (isCanTrans(currentItem, word) && !visited[word]) {
-                visited[word] = visited[currentItem] + 1;
-                queue.push(word)
+        const word = queue.shift();
+    
+        for (let i = 0; i < words.length; i++) {
+            if (isCanTrans(word, words[i]) && !visited[words[i]]) {
+                visited[words[i]] = visited[word] + 1
+                queue.push(words[i]);
             }
         }
     }
     
-    return visited[target] ?? 0;
+    return visited[target] || 0;
 }
