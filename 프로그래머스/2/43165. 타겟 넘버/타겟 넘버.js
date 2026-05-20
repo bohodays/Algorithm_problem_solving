@@ -1,15 +1,16 @@
 function solution(numbers, target) {
     let answer = 0;
     
-    const dfs = (currentNumber, count) => {
-        
+    const dfs = (num, count) => {
+        // 종료조건
         if (count === numbers.length) {
-            if (currentNumber === target) answer++;
+            if (num === target) answer++;
+            
             return;
         }
         
-        dfs(currentNumber + numbers[count], count + 1);
-        dfs(currentNumber - numbers[count], count + 1);
+        dfs(num + numbers[count], count + 1);
+        dfs(num - numbers[count], count + 1);
     }
     
     dfs(0, 0);
