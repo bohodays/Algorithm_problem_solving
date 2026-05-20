@@ -1,14 +1,17 @@
 function solution(number, k) {
-  const stack = [];
-
-  for (const num of number) {
-    while (k > 0 && stack.length && stack[stack.length - 1] < num) {
-      stack.pop();
-      k--;
+    let answer = [];
+    
+    for (const num of number) {
+        if (!answer.length) {
+            answer.push(num);
+        } else {
+            while (k > 0 && answer[answer.length - 1] < num) {
+                answer.pop();
+                k--;
+            }
+            answer.push(num);
+        }
     }
-    stack.push(num);
-  }
-
-  // 아직 k가 남아 있으면 뒤에서 k개 제거
-  return stack.slice(0, stack.length - k).join("");
+    
+    return answer.slice(0, number.length - k).join("");
 }
