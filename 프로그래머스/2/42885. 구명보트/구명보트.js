@@ -1,20 +1,20 @@
 function solution(people, limit) {
     let answer = 0;
-    people.sort((a, b) => a - b);
-    
-    let start = 0;
+    let start = 0
     let end = people.length - 1;
+    
+    people.sort((a, b) => a - b);
     while (start <= end) {
-        const startPoint = people[start];
-        const endPoint = people[end];
-        if (startPoint + endPoint > limit) {
-            end--;
-        } else {
+        const first = people[start];
+        const second = people[end];
+        
+        if (first + second > limit) end--;
+        else {
             start++;
             end--;
-        }
+        };
+        
         answer++;
     }
-    
     return answer;
 }
