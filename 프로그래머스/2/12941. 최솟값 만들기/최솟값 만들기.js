@@ -1,5 +1,9 @@
 function solution(A,B){
-    A = A.sort((a, b) => a - b);
-    B = B.sort((a, b) => b - a);
-    return A.map((_, i) => A[i] * B[i]).reduce((sum, num) => sum + num, 0);
+    const sortedA = A.sort((a, b) => a - b);
+    const sortedB = B.sort((a, b) => b - a);
+    
+    let answer = 0;
+    sortedA.forEach((num, i) => answer += sortedA[i] * sortedB[i]);
+
+    return answer;
 }
