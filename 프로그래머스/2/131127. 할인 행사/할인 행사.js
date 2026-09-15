@@ -1,18 +1,21 @@
 function solution(want, number, discount) {
     var answer = 0;
-    const wantRef = {};
-    want.forEach((item, index) => wantRef[item] = number[index]);
+    const ref = new Map();
+    want.forEach((item, i) => ref.set(item, number[i]));
     
-    for (let i = 0; i <= discount.length - 10;i++) {
-        const discountProducts = discount.slice(i, i + 10);
+    for (let i = 0; i <= discount.length - 10; i++) {
+        const arr = discount.slice(i, i + 10);
         
-        const tempRef = {};
-        discountProducts.forEach((item, index) => tempRef[item] ? tempRef[item] += 1 : tempRef[item] = 1);
+        let flag = true;
+        for (const key of ref.keys()) {
+            if (ref.get(key) !== arr.filter((item) => item === key).length) {
+                flag = false;
+                break;
+            }
+        }
         
-        const isSame = Object.keys(wantRef).every((key) => wantRef[key] === tempRef[key])
-        if (isSame) answer++;
+        if (flag) answer++
     }
-    
     
     return answer;
 }
