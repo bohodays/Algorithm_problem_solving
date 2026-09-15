@@ -1,16 +1,14 @@
 function solution(elements) {
+    const answer = new Set();
     const n = elements.length;
-    elements = elements.concat(elements);
-    const result = new Set();
     
     for (let i = 0; i < n; i++) {
-        const temp = [];
-        for (let j = 0; j < n; j++) {
-            temp.push(elements[i + j]);
-            result.add(temp.reduce((sum, num) => sum + num), 0);
+        let result = 0;
+        for (let j = i; j < n + i; j++) {
+            result += elements[j % n];
+            answer.add(result);
         }
     }
     
-    return result.size;
+    return answer.size;
 }
-
