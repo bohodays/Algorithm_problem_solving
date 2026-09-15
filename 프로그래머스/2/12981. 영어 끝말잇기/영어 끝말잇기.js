@@ -1,29 +1,24 @@
 function solution(n, words) {
-    const answer = [];
+    var answer = [];
+    const ref = new Map();
     let count = 0;
     
-    let prevWord = words[0];
-    const isExistWord = {
-        [prevWord]: true
-    };
-    for (let i = 1; i < words.length; i++) {
-        const targetWord = words[i];
-        count++;
-        
-        // 3번 규칙 확인
-        if (prevWord[prevWord.length - 1] !== targetWord[0]) {
-            return [(count % n) + 1, Math.ceil((count + 1) / n)];
+    for (let i = 0; i < words.length; i++) {
+        count = i;
+        const curr = words[i];
+        // 3번 체크
+        if (i !== 0) {
+            const prev = words[i - 1];
+            if (prev[prev.length - 1] !== curr[0]) {
+                break;
+            }
         }
         
-        // 4번 규칙 확인
-        if (isExistWord[targetWord]) {
-            return [(count % n) + 1, Math.ceil((count + 1) / n)];
-        }
+        // 4번 체크
+        if (ref.has(curr)) break;
         
-        prevWord = targetWord;
-        isExistWord[targetWord] = true;
-        
+        ref.set(curr, true);
     }
-        
-    return [0, 0];
+    
+    return ref.size === words.length ? [0, 0] : [(count % n) + 1, parseInt(count / n) + 1];
 }
