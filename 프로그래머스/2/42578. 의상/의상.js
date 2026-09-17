@@ -1,15 +1,11 @@
 function solution(clothes) {
-    let answer = 1;
-    const clothesRef = {};
-    clothes.forEach(([cloth, type]) => {
-        clothesRef[type] = (clothesRef[type] || 0) + 1;
-    });
     
-    // 각 유형별 개수 + 1 곱하기
-    for (const type in clothesRef) {
-        answer *= clothesRef[type] + 1;
-    }
+    const ref = new Map();
+    clothes.forEach(([name, type]) => {
+        ref.set(type, ref.has(type) ? ref.get(type) + 1 : 1);
+    })
     
-    // 모두 선택하지 않는 케이스 제외
-    return answer - 1;
+    const answer = [...ref.values()].reduce((sum, num) => sum * (num + 1), 1) - 1;
+    
+    return answer;
 }
