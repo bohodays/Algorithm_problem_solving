@@ -1,21 +1,23 @@
 function solution(arr1, arr2) {
     const answer = [];
-    const n = arr1.length;
-    const m = arr2[0].length;
-    const l = arr2.length;
     
-    for (let i = 0; i < n; i++) {
-        const result = [];
-        for (let j = 0; j < m; j++) {
-            let sum = 0
-            for (let k = 0; k < l; k++) {
-                sum += arr1[i][k] * arr2[k][j];
+    for (let i = 0; i < arr1.length; i++) {
+        const partialArr = [];
+        for (let j = 0; j < arr2[0].length; j++) {
+            let result = 0;
+            for (let k = 0; k < arr2.length; k++) {
+                result += arr1[i][k] * arr2[k][j]
             }
-            result.push(sum);
+            partialArr.push(result);
         }
-        answer.push(result);
+        answer.push(partialArr)
     }
-    
     
     return answer;
 }
+
+
+// 2 3 2   5 4 3
+// 4 2 4   2 4 1
+// 3 1 4   3 1 1
+
