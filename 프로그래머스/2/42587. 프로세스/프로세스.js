@@ -1,29 +1,23 @@
 function solution(priorities, location) {
-    const ref = [];
-    const queue = [];
-    priorities.forEach((priority, index) => {
-        queue.push([index, priority]);
-        ref.push(priority);
-    })
-    ref.sort();
+    let answer = 1;
     
-    let count = 1;
+    priorities = priorities.map((item, index) => [item, index]);
+    
     while (true) {
-        const [process, priority] = queue[0];
+        const [priority, position] = priorities.shift();
         
-        // 가장 높은 우선순위인지 확인
-        if (priority === ref[ref.length - 1]) {
-            ref.pop();
-            // location 대상인지 확인
-            if (process === location) return count;
-            else {
-                count++;
-                queue.shift();
-            }
+        // 우선순위가 더 높은 프로세스 여부 확인
+        if (priorities.filter((item) => item[0] > priority).length) {
+            priorities.push([priority, position]);
         } else {
-            queue.push(queue.shift());
+            // 목표 location인지 확인
+            if (position === location) {
+                break;
+            } else {
+                answer++;
+            }
         }
     }
     
-    return count;
+    return answer;
 }
