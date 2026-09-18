@@ -3,23 +3,21 @@ function solution(k, dungeons) {
     const n = dungeons.length;
     const visited = Array(n).fill(false);
     
-    const dfs = (k, count) => {
+    const dfs = (count, curr) => {
         answer = Math.max(answer, count);
         
         for (let i = 0; i < n; i++) {
-            const [need, cost] = dungeons[i];
-            if (k >= need) {
-                if (!visited[i]) {
-                    visited[i] = true;
-                    dfs(k - cost, count + 1);
-                    visited[i] = false;
-                }
+            const [need, use] = dungeons[i];
+            if (!visited[i] && curr >= need) {
+                visited[i] = true;
+                dfs(count + 1, curr - use);
+                visited[i] = false;
             }
+            
         }
-        
     }
     
-    dfs(k, 0)
+    dfs(0, k);
     
     return answer;
 }
