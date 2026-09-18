@@ -1,21 +1,24 @@
 function solution(topping) {
     let answer = 0;
+    const n = topping.length;
     
-    const rightSet = new Set(topping);
-    const toppingCountRef = {};
+    const ref = new Map();
     topping.forEach((item) => {
-        toppingCountRef[item] = toppingCountRef[item] ? toppingCountRef[item] + 1 : 1
+        ref.set(item, ref.has(item) ? ref.get(item) + 1 : 1);
     });
     
-    const leftSet = new Set();
+    let totalCount = [...ref.keys()].length;
+    const checkSet = new Set();
     topping.forEach((item) => {
-        leftSet.add(item);
+        checkSet.add(item);
+        if (ref.has(item) && ref.get(item) > 0) ref.set(item, ref.get(item) - 1);
         
-        if (toppingCountRef[item]) toppingCountRef[item] -= 1;
+        if (ref.get(item) === 0) {
+            ref.delete(item);
+            totalCount--;
+        }
         
-        if (!toppingCountRef[item]) rightSet.delete(item);
-        
-        if (leftSet.size === rightSet.size) answer++;
+        if (checkSet.size === totalCount) answer++;
     })
     
     return answer;
