@@ -1,19 +1,19 @@
 function solution(word) {
-    const vowels = ["A", "E", "I", "O", "U"];
-    const result = [];
+    var answer = 0;
+    const wordRef = [];
+    const ref = "AEIOU";
     
-    const dfs = (currentWord, count) => {
-        result.push(currentWord);
+    const dfs = (result) => {
+        if (result.length) wordRef.push(result);
         
-        // 종료조건
-        if (currentWord.length === 5) return;
+        if (result.length === 5) return;
         
-        for (let i = 0; i < vowels.length; i++) {
-            dfs(currentWord + vowels[i], count + 1);
+        for (let i = 0; i < ref.length; i++) {
+            dfs(result + ref[i]);
         }
     }
     
-    dfs("", 0);
+    dfs("");
     
-    return result.indexOf(word);
+    return wordRef.indexOf(word) + 1;
 }
