@@ -1,47 +1,43 @@
-const transMinutes = (time) => {
-    const [h, m] = time.split(":").map(item => +item);
-    return h * 60 + m;
+// 시각을 입력받은 분으로 변환하는 함수
+const convertMin = (time) => {
+    const splitedTime = time.split(":").map((t) => Number(t));
+    return splitedTime[0] * 60 + splitedTime[1];
 }
 
 function solution(fees, records) {
-    const carsRecords = {}; // current, total, status
-    const stack = [];
     const [defaultTime, defaultFee, unitTime, unitFee] = fees;
+    const answer = [];
+    const inMap = new Map();
+    const outMap = new Map();
+    const resultMap = new Map();
     
-    records.forEach((item) => {
-        const [time, carNumber, status] = item.split(" ")
+    for (const record of records) {
+        const [time, carNum, type] = record.split(" ");
         
-        // 기록이 없는 경우
-        if (!carsRecords[carNumber]) {
-            carsRecords[carNumber] = [transMinutes(time), 0, status]
-        }
-        // 기록이 있는 경우
-        else {
+        if (type === "IN") {
             // 입차인 경우
-            if (status === "IN") {
-                carsRecords[carNumber] = [transMinutes(time), carsRecords[carNumber][1], status]
-            }
-            // 출차인 경우
-            else {
-                const [startTime, totalMinute] = carsRecords[carNumber];
-                carsRecords[carNumber] = [0, totalMinute + (transMinutes(time) - startTime), status]
-            }
-            
+            inMap.set(carNum, convertMin(time));
+        } else if (type === "OUT") {
+            // 출차인 경우  
+            const resultTime = convertMin(time) - inMap.get(carNum);
+            resultMap.set(carNum, resultMap.has(carNum) ? resultMap.get(carNum) + resultTime : resultTime);
+            inMap.delete(carNum)
         }
-    })
+    }
     
-    // 출차 기록이 없는 경우 체크
-    Object.entries(carsRecords).forEach(([key, value]) => {
-        const [currentTime, totalTime, status] = value;
-        if (status === "IN") {
-            carsRecords[key][1] += transMinutes("23:59") - currentTime;
+    // 출차 이력이 없는 차량 계산
+    if (inMap.size) {
+        for (const key of inMap.keys()) {
+            const resultTime = convertMin("23:59") - inMap.get(key);
+            resultMap.set(key, resultMap.has(key) ? resultMap.get(key) + resultTime : resultTime);
+            inMap.delete(key)
         }
-    })
+    }
     
-    const answer = Object.entries(carsRecords).sort((a, b) => a[0] - b[0]).map(([key, value]) => {
-        const [_, totalMinutes] = value;
-        return totalMinutes > defaultTime ? defaultFee + Math.ceil((totalMinutes - defaultTime) / unitTime) * unitFee : defaultFee
-    })
+    // 요금계산
+    for (const [key, value] of resultMap.entries()) {
+        answer.push([key, value > defaultTime ? defaultFee + (Math.ceil((value - defaultTime) / unitTime) * unitFee)  : defaultFee])
+    }
     
-    return answer;
+    return answer.sort((a, b) => a[0] - b[0]).map((car) => car[1]);
 }
