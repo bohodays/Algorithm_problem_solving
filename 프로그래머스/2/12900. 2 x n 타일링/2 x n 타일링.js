@@ -1,12 +1,12 @@
 function solution(n) {
-    const answer = [0, 1, 2];
+    const D = 1000000007;
+    const table = [0, 1, 2];
     
-    if (n <= 2) return answer[n];
+    if (n < 3) return table[n];
     
-    while (answer.length <= n) {
-        const lastIndex = answer.length;
-        answer.push((answer[lastIndex - 1] % 1000000007) + (answer[lastIndex - 2] % 1000000007));
+    for (let i = 3; i <= n; i++) {
+        table.push((table[i - 1] % D) + (table[i - 2] % D))
     }
-    
-    return answer[n] % 1000000007;
+
+    return table[n] % D;
 }
