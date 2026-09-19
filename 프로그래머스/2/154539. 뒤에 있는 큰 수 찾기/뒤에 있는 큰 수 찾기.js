@@ -1,19 +1,18 @@
 function solution(numbers) {
-    const n = numbers.length
-    const answer = Array(n).fill(-1);
-    
+    const answer = [];
     const stack = [];
-    for (let i = n - 1; i >= 0; i--) {
-        const currentItem = numbers[i];
-        
-        while (stack.length && currentItem >= stack[stack.length - 1]) {
+    
+    for (let i = numbers.length - 1; i >= 0; i--) {
+        const curr = numbers[i];
+        while (stack.length && curr >= stack[stack.length - 1]) {
             stack.pop();
         }
         
-        if (stack.length) answer[i] = stack[stack.length - 1];
+        if (stack.length) answer.push(stack[stack.length - 1]);
+        else answer.push(-1);
         
-        stack.push(currentItem);
+        stack.push(curr);
     }
     
-    return answer;
+    return answer.reverse();
 }
