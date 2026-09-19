@@ -1,19 +1,21 @@
 function solution(record) {
     const answer = [];
-    const NicknameRecord = {};
-    const result = [];
+    const uidToNameMap = new Map();
+    for (const row of record) {
+        const [type, uid, name] = row.split(" ");
+        if (type === "Enter" || type === "Change") {
+            uidToNameMap.set(uid, name);
+        }
+    }
     
-    record.forEach((item) => {
-        const [cmd, id, nickname] = item.split(" ");
-        result.push([cmd, id]);
-        if (cmd === "Enter" || cmd === "Change") NicknameRecord[id] = nickname;
-    })
-   
-    result.forEach((item) => {
-        const [cmd, id] = item;
-        if (cmd === "Enter") answer.push(NicknameRecord[id] + "님이 들어왔습니다.");
-        else if (cmd === "Leave") answer.push(NicknameRecord[id] + "님이 나갔습니다.");
-    })
+    for (const row of record) {
+        const [type, uid, name] = row.split(" ");
+        if (type === "Enter") {
+            answer.push(`${uidToNameMap.get(uid)}님이 들어왔습니다.`);
+        } else if (type === "Leave") {
+            answer.push(`${uidToNameMap.get(uid)}님이 나갔습니다.`);
+        }
+    }
     
     return answer;
 }
