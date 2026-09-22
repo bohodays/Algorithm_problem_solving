@@ -1,25 +1,23 @@
 function solution(queue1, queue2) {
-    let count = 0;
-    
-    const totalQueue = [...queue1, ...queue2];
-    const targetSumValue = totalQueue.reduce((sum, num) => sum + num, 0) / 2;
-    
-    // two point 이용
+    let answer = 0;
+    const queue = [...queue1, ...queue2];
+    const target = queue.reduce((sum, num) => sum + num, 0) / 2;
     let start = 0;
     let end = queue1.length - 1;
-    let initSumValue = queue1.reduce((sum, num) => sum + num, 0);
+    let queue1Total = queue1.reduce((sum, num) => sum + num, 0);
     
-    while (start <= end && end < totalQueue.length - 1) {
-        if (initSumValue < targetSumValue) {
+    while (start <= end && end < queue.length - 1) {
+        
+        if (queue1Total < target) {
             end++;
-            initSumValue += totalQueue[end];
-            count++;
-        } else if (initSumValue > targetSumValue) {
-            initSumValue -= totalQueue[start];
+            queue1Total += queue[end];
+            answer++;
+        } else if (queue1Total > target) {
+            queue1Total -= queue[start];
             start++;
-            count++;
+            answer++;
         } else {
-            return count;
+            return answer;
         }
     }
     
