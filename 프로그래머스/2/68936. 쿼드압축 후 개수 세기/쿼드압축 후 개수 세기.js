@@ -1,38 +1,53 @@
 function solution(arr) {
-    let zeroCount = 0;
+    const answer = [];
+    const queue = [[0, 0, arr.length]];
     let oneCount = 0;
-    const N = arr.length;
+    let zeroCount = 0;
     
-    const onDivide = (row, col, limit) => {
-        let canDivide = true;
+    while (queue.length) {
+        const [x, y, n] = queue.shift();
         
-        // 영역을 순회하면서 모든 수가 같은지 확인
-        for (let i = row; i < row + limit; i++) {
-            for (let j = col; j < col + limit; j++) {
-                if (arr[row][col] !== arr[i][j]) {
-                    canDivide = false;
+        // 해당 영역의 모든 수가 같은 값인지 확인
+        const target = arr[x][y];
+        let canDivide = false;
+        for (let i = x; i < x + n; i++) {
+            let flag = false;
+            for (let j = y; j < y + n; j++) {
+                if (arr[i][j] !== target) {
+                    canDivide = true;
+                    flag = true;
                     break;
                 }
             }
-            if (!canDivide) break;
+            if (flag) break;
         }
         
-        // 만약 영역 내부에 있는 모든 수가 같지 않다면
-        if (!canDivide) {
-            const halfLimit = parseInt(limit / 2);
-            onDivide(row, col, halfLimit);
-            onDivide(row, col + halfLimit, halfLimit);
-            onDivide(row + halfLimit, col, halfLimit);
-            onDivide(row + halfLimit, col + halfLimit, halfLimit);
-        } 
-        // 그렇지 않다면
-        else {
-            if (arr[row][col]) oneCount += 1;
-            else zeroCount += 1;
+        // 모든 수가 같지 않으면 영역 쪼개기
+        if (canDivide) {
+            const dividedN = n / 2;
+            if (dividedN !== 1) {
+                queue.push([x, y, dividedN]);
+                queue.push([x + dividedN, y, dividedN]);
+                queue.push([x, y + dividedN, dividedN]);
+                queue.push([x + dividedN, y + dividedN, dividedN]);
+            }
+        } else {
+        // 모든 수가 같다면 count 및 영역 초기화
+            if (target === 0) zeroCount++;
+            else oneCount++;
+            
+            for (let i = x; i < x + n; i++) {
+                for (let j = y; j < y + n; j++) {
+                    arr[i][j] = Infinity;
+                }
+            }
         }
     }
     
-    onDivide(0, 0, N);
+    arr.forEach((row) => {
+        zeroCount += row.filter((num) => num === 0).length;
+        oneCount += row.filter((num) => num === 1).length;
+    })
     
-    return [ zeroCount, oneCount ];
+    return [zeroCount, oneCount];
 }
